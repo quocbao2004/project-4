@@ -80,7 +80,7 @@ public class CustomController {
         return mav;
     }
     @RequestMapping(value = "/admin/customer-edit-{id}", method = RequestMethod.GET)
-    public ModelAndView customerEdit(@PathVariable("id") Long Customerid, Long transactionid, HttpServletRequest request) {
+    public ModelAndView customerEdit(@PathVariable("id") Long Customerid, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/customer/edit");
         if(Customerid != null){
             CustomerDTO customerDTO = customerService.getOneCustomerEdit(Customerid);
@@ -89,10 +89,6 @@ public class CustomController {
             mav.addObject("customerEdit", customerDTO);
             mav.addObject("transactionEdit1", transactionDTOCSKH);
             mav.addObject("transactionEdit2", transactionDTODDX);
-        }
-        if(transactionid != null){
-            TransactionDTO transactionEditDTO = transactionService.findOneTransaction(transactionid);
-            mav.addObject("transactionEdit", transactionEditDTO);
         }
         mav.addObject("transactionType", TransactionType.transactionType());
         return mav;
