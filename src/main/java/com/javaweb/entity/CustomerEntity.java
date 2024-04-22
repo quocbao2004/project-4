@@ -1,12 +1,15 @@
 package com.javaweb.entity;
 
+import org.springframework.data.annotation.CreatedBy;
+
 import javax.persistence.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "customer")
-public class CustomerEntity {
+public class CustomerEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,11 +38,26 @@ public class CustomerEntity {
     @Column(name = "status")
     private String status;
 
-    @Column(name = "createddate")
-    private String createddate;
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST}, orphanRemoval = true)
+    private List<TransactionEntity>transactions = new ArrayList<>();
 
-    @Column(name = "createdby")
-    private String createdby;
+    public List<TransactionEntity> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<TransactionEntity> transactions) {
+        this.transactions = transactions;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public List<UserEntity> getUserEntities() {
         return userEntities;
@@ -47,14 +65,6 @@ public class CustomerEntity {
 
     public void setUserEntities(List<UserEntity> userEntities) {
         this.userEntities = userEntities;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFullname() {
@@ -103,21 +113,5 @@ public class CustomerEntity {
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public String getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(String createddate) {
-        this.createddate = createddate;
-    }
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
     }
 }

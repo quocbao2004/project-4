@@ -7,33 +7,14 @@ public class CustomerDTO extends AbstractDTO{
     private String email;
     private String demand;
     private String status;
-    private String companyName;
-    private String createddate;
-    private String createdby;   
+    private String companyname;
 
-
-    public String getCreateddate() {
-        return createddate;
+    public String getCompanyname() {
+        return companyname;
     }
 
-    public void setCreateddate(String createddate) {
-        this.createddate = createddate;
-    }
-
-    public String getCreatedby() {
-        return createdby;
-    }
-
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+    public void setCompanyname(String companyname) {
+        this.companyname = companyname;
     }
 
     public String getManagementStaff() {

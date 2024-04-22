@@ -5,6 +5,7 @@ import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.BuildingService;
 import com.javaweb.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,15 +28,26 @@ public class BuildingController {
     @Autowired
     private BuildingService buildingService;
 
+    private void setResponse( BuildingSearchResponse buildingSearchResponse,BuildingSearchRequest buildingSearchRequest ){
+        List<BuildingSearchResponse> res = buildingService.findAll(buildingSearchRequest , PageRequest.of((buildingSearchRequest.getPage() - 1), buildingSearchRequest.getMaxPageItems()));
+        buildingSearchResponse.setListResult(res);
+        buildingSearchResponse.setTotalItems((int)buildingService.countTotalItems(buildingSearchRequest));
+    }
+
     @RequestMapping(value = "/admin/building-list", method = RequestMethod.GET)
     public ModelAndView buildingList(@ModelAttribute BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/building/list");
-        List<BuildingSearchResponse> res = buildingService.findAll(buildingSearchRequest , PageRequest.of((buildingSearchRequest.getPage() - 1), buildingSearchRequest.getMaxPageItems()));
         BuildingSearchResponse buildingSearchResponse = new BuildingSearchResponse();
-        buildingSearchResponse.setListResult(res);
-        buildingSearchResponse.setTotalItems((int)buildingService.countTotalItems(buildingSearchRequest));
-//        List<BuildingSearchResponse> buildingList = buildingService.findAll(buildingSearchRequest);
-        mav.addObject("buildingList", buildingSearchResponse);
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
+            Long staffId = SecurityUtils.getPrincipal().getId();
+            buildingSearchRequest.setStaffId(staffId);
+            setResponse(buildingSearchResponse,buildingSearchRequest);
+            mav.addObject("buildingList", buildingSearchResponse);
+        }
+        else{
+            setResponse(buildingSearchResponse,buildingSearchRequest);
+            mav.addObject("buildingList", buildingSearchResponse);
+        }
         mav.addObject("modelSearch", buildingSearchRequest);
         mav.addObject("listStaffs", userService.getStaffs());
         mav.addObject("districts", District.type());

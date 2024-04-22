@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@include file="/common/taglib.jsp"%>
+<c:url var="webcontacturl" value="  /lien-he"/>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -115,22 +116,23 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-6">
+
                     <h2 class="title-lienhe"><strong>Liên hệ với chúng tôi</strong></h2>
-                    <form>
+                    <form:form modelAttribute="modelAdd" id="listForm" action="${webcontacturl}" method="GET">
                         <div class="row">
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Họ và tên">
+                                <input type="text" class="form-control" name = "fullname" placeholder="Họ và tên">
                             </div>
                             <div class="col">
-                                <input type="text" class="form-control" placeholder="Email">
+                                <input type="text" class="form-control" name = "email" placeholder="Email">
                             </div>
                         </div>
-                        <input type="text" class="form-control mt-3" placeholder="Số điện thoại">
-                        <input type="text" class="form-control mt-3" placeholder="Nội dung">
-                        <button class="btn btn-primary px-4 mt-3">
+                        <input type="text" class="form-control mt-3" name = "phone" placeholder="Số điện thoại">
+                        <input type="text" class="form-control mt-3" name = "demand" placeholder="Nội dung">
+                        <button class="btn btn-primary px-4 mt-3" id ="addCustomer">
                             Gửi liên hệ
                         </button>
-                    </form>
+                    </form:form>
                 </div>
             </div>
         </div>
@@ -237,3 +239,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>
+<script>
+    $('#addCustomer').click(function (e)
+    {
+        e.preventDefault();
+        $('#listForm').submit();
+    })
+</script>

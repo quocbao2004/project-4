@@ -2,15 +2,21 @@ package com.javaweb.controller.admin;
 
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.entity.CustomerEntity;
+import com.javaweb.entity.TransactionEntity;
 import com.javaweb.enums.District;
+import com.javaweb.enums.TransactionType;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.CustomerDTO;
+import com.javaweb.model.dto.TransactionDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.request.CustomerSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.CustomerSearchResponse;
 import com.javaweb.repository.CustomerRepository;
+import com.javaweb.repository.TransactionRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.CustomerService;
+import com.javaweb.service.TransactionService;
 import com.javaweb.service.impl.UserService;
 import com.javaweb.utils.MessageUtils;
 import org.apache.commons.lang.StringUtils;
@@ -37,18 +43,33 @@ public class CustomController {
     private CustomerService customerService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private TransactionRepository transactionRepository;
+    @Autowired
+    private TransactionService transactionService;
+
+    private void setResponse(CustomerSearchResponse customerSearchResponse, CustomerSearchRequest customerSearchRequest){
+        List<CustomerSearchResponse>findAll = customerService.findAll(customerSearchRequest , PageRequest.of(1, 10));
+        customerSearchResponse.setListResult(findAll);
+        customerSearchResponse.setTotalItems((int)customerService.countTotalItems(customerSearchRequest));
+    }
 
     @ExceptionHandler(Exception.class)
     @RequestMapping(value = "/admin/customer-list", method = RequestMethod.GET)
     public ModelAndView customerList(@ModelAttribute CustomerSearchRequest customerSearchRequest, HttpServletRequest request, Exception ex) {
         ModelAndView mav = new ModelAndView("admin/customer/list");
-        List<CustomerSearchResponse> res = customerService.findAll(customerSearchRequest , PageRequest.of((customerSearchRequest.getPage() - 1), customerSearchRequest.getMaxPageItems()));
         CustomerSearchResponse customerSearchResponse = new CustomerSearchResponse();
-        customerSearchResponse.setListResult(res);
-        customerSearchResponse.setTotalItems((int)customerService.countTotalItems(customerSearchRequest));
-        mav.addObject("errorMessage", "Đã xảy ra lỗi: " + ex.getMessage());
+        if(SecurityUtils.getAuthorities().contains("ROLE_STAFF")) {
+            Long staffid = SecurityUtils.getPrincipal().getId();
+            customerSearchRequest.setStaffId(staffid);
+            setResponse(customerSearchResponse, customerSearchRequest);
+            mav.addObject("customerList", customerSearchResponse);
+        }
+        else {
+            setResponse(customerSearchResponse, customerSearchRequest);
+            mav.addObject("customerList", customerSearchResponse);
+        }
         mav.addObject("modelSearchCustomer", customerSearchRequest);
-        mav.addObject("customerList", customerSearchResponse);
         mav.addObject("listStaffs", userService.getStaffs());
         return mav;
     }
@@ -59,10 +80,21 @@ public class CustomController {
         return mav;
     }
     @RequestMapping(value = "/admin/customer-edit-{id}", method = RequestMethod.GET)
-    public ModelAndView customerEdit(@PathVariable("id") Long id, HttpServletRequest request) {
+    public ModelAndView customerEdit(@PathVariable("id") Long Customerid, Long transactionid, HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("admin/customer/edit");
-        CustomerDTO customerDTO = customerService.getOneCustomerEdit(id);
-        mav.addObject("customerEdit", customerDTO);
+        if(Customerid != null){
+            CustomerDTO customerDTO = customerService.getOneCustomerEdit(Customerid);
+            List<TransactionDTO> transactionDTOCSKH = transactionService.getTransactionEditCSKH(Customerid);
+            List<TransactionDTO> transactionDTODDX = transactionService.getTransactionEditDDX(Customerid);
+            mav.addObject("customerEdit", customerDTO);
+            mav.addObject("transactionEdit1", transactionDTOCSKH);
+            mav.addObject("transactionEdit2", transactionDTODDX);
+        }
+        if(transactionid != null){
+            TransactionDTO transactionEditDTO = transactionService.findOneTransaction(transactionid);
+            mav.addObject("transactionEdit", transactionEditDTO);
+        }
+        mav.addObject("transactionType", TransactionType.transactionType());
         return mav;
     }
 }

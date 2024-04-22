@@ -164,8 +164,8 @@
                                 <display:column headerClass="text-left" property="phone" title="Số điện thoại"/>
                                 <display:column headerClass="text-left" property="email" title="Email"/>
                                 <display:column headerClass="text-left" property="demand" title="Nhu cầu"/>
-                                <display:column headerClass="text-left" property="createdby" title="Người thêm"/>
-                                <display:column headerClass="text-left" property="createddate" title="Ngày thêm"/>
+                                <display:column headerClass="text-left" property="createdBy" title="Người thêm"/>
+                                <display:column headerClass="text-left" property="createdDate" title="Ngày thêm"/>
                                 <display:column headerClass="text-left" property="status" title="Tình trạng"/>
                                 <display:column headerClass="col-actions" title="Thao tác">
                                     <security:authorize access="hasRole('MANAGER')">

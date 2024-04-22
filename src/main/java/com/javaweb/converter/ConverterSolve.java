@@ -3,8 +3,10 @@ package com.javaweb.converter;
 import com.javaweb.entity.BuildingEntity;
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.entity.RentAreaEntity;
+import com.javaweb.entity.TransactionEntity;
 import com.javaweb.enums.District;
 import com.javaweb.model.dto.BuildingDTO;
+import com.javaweb.model.dto.TransactionDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.CustomerSearchResponse;
@@ -112,5 +114,16 @@ public class ConverterSolve {
             typeList.add(item);
         }
         return typeList;
+    }
+
+    public List<TransactionDTO>converterTransaction(List<TransactionEntity> entities){
+        List<TransactionDTO> result = new ArrayList<>();
+        if(entities != null){
+            for(TransactionEntity it : entities){
+                TransactionDTO dto = modelmapper.map(it, TransactionDTO.class);
+                result.add(dto);
+            }
+        }
+        return result;
     }
 }

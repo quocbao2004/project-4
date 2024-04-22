@@ -1,7 +1,13 @@
 package com.javaweb.controller.web;
 
+import com.javaweb.entity.CustomerEntity;
+import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
+import com.javaweb.service.CustomerService;
 import com.javaweb.utils.DistrictCode;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -17,6 +23,8 @@ import javax.servlet.http.HttpSession;
 
 @Controller(value = "homeControllerOfWeb")
 public class HomeController {
+	@Autowired
+	private CustomerService customerService;
 
 	@RequestMapping(value = "/trang-chu", method = RequestMethod.GET)
 	public ModelAndView homePage(BuildingSearchRequest buildingSearchRequest, HttpServletRequest request) {
@@ -44,14 +52,23 @@ public class HomeController {
     }
 
     @GetMapping(value="/lien-he")
-    public ModelAndView contact(){
+    public ModelAndView contact(CustomerDTO customer){
         ModelAndView mav = new ModelAndView("/web/contact");
+		if(customer.getPhone() != null && customer.getFullname() != null){
+			customerService.AddOrUpdateCustomer(customer);
+		}
         return mav;
     }
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {
 		ModelAndView mav = new ModelAndView("login");
+		return mav;
+	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public ModelAndView register() {
+		ModelAndView mav = new ModelAndView("register");
 		return mav;
 	}
 

@@ -9,11 +9,20 @@ public class UserDTO extends AbstractDTO {
     private String userName;
     private String fullName;
     private String password;
+    private String retype_password;
     private Integer status;
     private List<RoleDTO> roles = new ArrayList<>();
     private String roleName;
     private String roleCode;
     private Map<String,String> roleDTOs = new HashMap<>();
+
+    public String getRetype_password() {
+        return retype_password;
+    }
+
+    public void setRetype_password(String retype_password) {
+        this.retype_password = retype_password;
+    }
 
     public String getUserName() {
         return userName;

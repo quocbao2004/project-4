@@ -320,7 +320,7 @@
         }
         else
         {
-            window.location.href="<c:url value = "/admin/building-edit?typeCode=require"/>";
+            window.location.href="<c:url value = "/admin/customer-edit?typeCode=require"/>";
         }
     });
 

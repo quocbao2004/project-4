@@ -10,14 +10,13 @@ public class CustomerSearchResponse extends AbstractDTO {
     private String status;
     private String companyName;
     private String email;
-    private String createdby;
-    private String createddate;
 
-
+    @Override
     public Long getId() {
         return id;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
@@ -36,14 +35,6 @@ public class CustomerSearchResponse extends AbstractDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getDemand() {
@@ -70,19 +61,11 @@ public class CustomerSearchResponse extends AbstractDTO {
         this.companyName = companyName;
     }
 
-    public String getCreatedby() {
-        return createdby;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCreatedby(String createdby) {
-        this.createdby = createdby;
-    }
-
-    public String getCreateddate() {
-        return createddate;
-    }
-
-    public void setCreateddate(String createddate) {
-        this.createddate = createddate;
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

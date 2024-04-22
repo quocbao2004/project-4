@@ -29,9 +29,6 @@ public class UserEntity extends BaseEntity {
     @Column(name = "email", unique = true)
     private String email;
 
-//    @OneToMany(mappedBy = "staffid", fetch = FetchType.LAZY)
-//    private List<AssignmentEntity>assignmentBuildingEntities = new ArrayList<>();
-
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
@@ -66,6 +63,15 @@ public class UserEntity extends BaseEntity {
 //    public void setAssignmentBuildingEntities(List<AssignmentEntity> assignmentBuildingEntities) {
 //        this.assignmentBuildingEntities = assignmentBuildingEntities;
 //    }
+
+
+    public List<BuildingEntity> getCustomerid() {
+        return customerid;
+    }
+
+    public void setCustomerid(List<BuildingEntity> customerid) {
+        this.customerid = customerid;
+    }
 
     public static long getSerialVersionUID() {
         return serialVersionUID;

@@ -3,9 +3,11 @@ package com.javaweb.service.impl;
 import com.javaweb.Builder.BuildingSearchBuilder;
 import com.javaweb.converter.ConverterSolve;
 import com.javaweb.entity.CustomerEntity;
+import com.javaweb.entity.TransactionEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.dto.CustomerDTO;
+import com.javaweb.model.dto.TransactionDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.request.CustomerSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
@@ -13,6 +15,7 @@ import com.javaweb.model.response.CustomerSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
 import com.javaweb.repository.CustomerRepository;
+import com.javaweb.repository.TransactionRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.CustomerService;
 import org.modelmapper.ModelMapper;
@@ -32,6 +35,9 @@ public class CustomerServiceImpl implements CustomerService {
     private ModelMapper modelMapper;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private TransactionRepository transactionRepository;
+
     @Override
     public List<CustomerSearchResponse> findAll(CustomerSearchRequest customerSearchRequest, Pageable pageable){
         List<CustomerSearchResponse> res = new ArrayList<>();
@@ -52,6 +58,8 @@ public class CustomerServiceImpl implements CustomerService {
         CustomerDTO result = modelMapper.map(entity, CustomerDTO.class);
         return result;
     }
+
+
 
     @Override
     public  void AddOrUpdateCustomer(CustomerDTO customerDTO){

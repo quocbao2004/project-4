@@ -30,7 +30,7 @@ public class BuildingDTO extends AbstractDTO{
     private String payment;
     private String renttime;
     private String decorationtime;
-    private String brokeragetee;
+    private String brokeragefee;
     private String note;
     private String image;
     private String imageBase64;
@@ -135,12 +135,12 @@ public class BuildingDTO extends AbstractDTO{
         this.decorationtime = decorationtime;
     }
 
-    public String getBrokeragetee() {
-        return brokeragetee;
+    public String getBrokeragefee() {
+        return brokeragefee;
     }
 
-    public void setBrokeragetee(String brokeragetee) {
-        this.brokeragetee = brokeragetee;
+    public void setBrokeragefee(String brokeragefee) {
+        this.brokeragefee = brokeragefee;
     }
 
     public String getNote() {
