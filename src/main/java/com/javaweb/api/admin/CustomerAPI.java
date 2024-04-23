@@ -32,8 +32,8 @@ public class CustomerAPI {
     private ModelMapper modelMapper;
 
     @PostMapping
-    public void AddOrUpdateCustomer(@RequestBody CustomerDTO customerDTO){
-        customerService.AddOrUpdateCustomer(customerDTO);
+    public ResponseEntity<CustomerDTO> AddOrUpdateCustomer(@RequestBody CustomerDTO customerDTO){
+        return ResponseEntity.ok(customerService.AddOrUpdateCustomer(customerDTO));
     }
 
     @DeleteMapping(value="/{ids}")
@@ -48,20 +48,19 @@ public class CustomerAPI {
         return result;
     }
 
-    @PostMapping("/assignment")
-    public void updateAssignmentCustomer(@RequestBody AssignmentCustomerDTO assignmentCustomerDTO){
-        customerService.UpdateAssignmentCustomerService(assignmentCustomerDTO);
+    @PostMapping("/assignment-customer")
+    public ResponseEntity<AssignmentCustomerDTO> updateAssignmentCustomer(@RequestBody AssignmentCustomerDTO assignmentCustomerDTO){
+       return ResponseEntity.ok( customerService.UpdateAssignmentCustomerService(assignmentCustomerDTO));
     }
 
     @PostMapping("/transaction-type")
-    public void updateTransaction(@RequestBody TransactionDTO transactionDTO){
-        transactionService.AddOrUpdateTransaction(transactionDTO);
+    public ResponseEntity<TransactionDTO> updateTransaction(@RequestBody TransactionDTO transactionDTO){
+        return ResponseEntity.ok(transactionService.AddOrUpdateTransaction(transactionDTO));
     }
 
     @GetMapping("/{id}/transaction-detail")
     public ResponseEntity<TransactionDTO> loadTransactionDetails(@PathVariable Long id) {
         Optional<TransactionEntity> optionalTransaction = transactionRepository.findById(id);
-
         if (optionalTransaction.isPresent()) {
             TransactionEntity transaction = optionalTransaction.get();
             TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);

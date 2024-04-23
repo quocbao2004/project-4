@@ -11,7 +11,15 @@ public class CustomerSearchRequest extends AbstractDTO {
     private String companyName;
     private String email;
     private Long staffId;
+    private int isActive;
 
+    public int isActive() {
+        return isActive;
+    }
+
+    public void setActive(int active) {
+        isActive = active;
+    }
     @Override
     public Long getId() {
         return id;

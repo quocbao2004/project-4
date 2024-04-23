@@ -1,16 +1,11 @@
 package com.javaweb.service.impl;
 
-import com.javaweb.Builder.BuildingSearchBuilder;
 import com.javaweb.converter.ConverterSolve;
 import com.javaweb.entity.CustomerEntity;
-import com.javaweb.entity.TransactionEntity;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.AssignmentCustomerDTO;
 import com.javaweb.model.dto.CustomerDTO;
-import com.javaweb.model.dto.TransactionDTO;
-import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.request.CustomerSearchRequest;
-import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.CustomerSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
 import com.javaweb.model.response.StaffResponseDTO;
@@ -40,9 +35,8 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerSearchResponse> findAll(CustomerSearchRequest customerSearchRequest, Pageable pageable){
-        List<CustomerSearchResponse> res = new ArrayList<>();
         List<CustomerEntity>temp = customerRepository.findAll(customerSearchRequest, pageable);
-        res = converterSolve.converterCustomer(temp);
+        List<CustomerSearchResponse> res  = converterSolve.converterCustomer(temp);
         return res;
     }
 
@@ -62,14 +56,20 @@ public class CustomerServiceImpl implements CustomerService {
 
 
     @Override
-    public  void AddOrUpdateCustomer(CustomerDTO customerDTO){
+    public CustomerDTO AddOrUpdateCustomer(CustomerDTO customerDTO){
         CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
+        customerEntity.setActive(1);
         customerRepository.save(customerEntity);
+        return customerDTO;
     }
 
     @Override
     public void DeleteCustomer(Long[] ids){
-        customerRepository.deleteByIdIn(ids);
+        for(Long id : ids){
+            CustomerEntity customer = customerRepository.findById(id).get();
+            customer.setActive(0);
+            customerRepository.save(customer);
+        }
     }
 
     @Override
@@ -97,12 +97,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void UpdateAssignmentCustomerService(AssignmentCustomerDTO assignmentCustomerDTO){
+    public AssignmentCustomerDTO UpdateAssignmentCustomerService(AssignmentCustomerDTO assignmentCustomerDTO){
         CustomerEntity optionalCustomer = customerRepository.findById(assignmentCustomerDTO.getCustomerId()).get();
         if (optionalCustomer != null) {
             List<UserEntity> staffEntities = userRepository.findAllById(assignmentCustomerDTO.getStaffs());
             optionalCustomer.setUserEntities(staffEntities);
             customerRepository.save(optionalCustomer);
         }
+        return assignmentCustomerDTO;
     }
 }

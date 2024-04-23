@@ -28,7 +28,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         StringBuilder sql = new StringBuilder("SELECT DISTINCT c.* "
                 + "FROM customer c ");
         joinTable(customerSearchRequest, sql);
-        StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
+        StringBuilder where = new StringBuilder(" WHERE 1 = 1  AND is_active = 1 ");
         NewQuery(customerSearchRequest, where);
         sql.append(where);
         return sql.toString();
@@ -74,7 +74,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustom {
         StringBuilder sql = new StringBuilder("SELECT COUNT(DISTINCT c.id) "
                 + "FROM customer c ");
         joinTable(customerSearchRequest, sql);
-        StringBuilder where = new StringBuilder(" WHERE 1 = 1 ");
+        StringBuilder where = new StringBuilder(" WHERE 1 = 1   AND is_active = 1 ");
         NewQuery(customerSearchRequest, where);
         sql.append(where);
 

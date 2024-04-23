@@ -249,13 +249,13 @@
             contentType: "application/json",
             dataType: "JSON",
             success: function (respond) {
-                console.log("Success");
+                window.location.href="<c:url value = "/admin/customer-list"/>";
             },
 
             error: function (respond) {
                 console.log("failed");
                 console.log(respond);
-                window.location.href="<c:url value = "/admin/customer-list"/>";
+                window.location.href="<c:url value = "/admin/customer-edit"/>";
             }
         })
     }
@@ -304,7 +304,7 @@
 
             error: function (response)
             {
-                window.location.href="/admin/customer-list";
+                window.location.href="/admin/customer-edit";
             }
         })
     }

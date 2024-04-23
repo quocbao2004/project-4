@@ -10,7 +10,15 @@ public class CustomerSearchResponse extends AbstractDTO {
     private String status;
     private String companyName;
     private String email;
+    private int isActive;
 
+    public int isActive() {
+        return isActive;
+    }
+
+    public void setActive(int active) {
+        isActive = active;
+    }
     @Override
     public Long getId() {
         return id;

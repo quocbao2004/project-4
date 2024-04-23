@@ -280,7 +280,7 @@
     function assignment(data) {
         $.ajax({
             type: "POST",
-            url: "${customerAPI}/" + 'assignment',
+            url: "${customerAPI}/" + 'assignment-customer',
             data: JSON.stringify(data),
             contentType: "application/json",
             dataType: "JSON",

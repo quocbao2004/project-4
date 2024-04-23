@@ -20,6 +20,9 @@ public class CustomerEntity extends BaseEntity {
             inverseJoinColumns = @JoinColumn(name = "staffid", nullable = false))
     private List<UserEntity> userEntities = new ArrayList<>();
 
+    @Column(name="is_active")
+    private int isActive;
+
     @Column(name = "fullname")
     private String fullname;
 
@@ -38,7 +41,7 @@ public class CustomerEntity extends BaseEntity {
     @Column(name = "status")
     private String status;
 
-    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST}, orphanRemoval = true)
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY)
     private List<TransactionEntity>transactions = new ArrayList<>();
 
     public List<TransactionEntity> getTransactions() {
@@ -47,6 +50,14 @@ public class CustomerEntity extends BaseEntity {
 
     public void setTransactions(List<TransactionEntity> transactions) {
         this.transactions = transactions;
+    }
+
+    public int isActive() {
+        return isActive;
+    }
+
+    public void setActive(int active) {
+        isActive = active;
     }
 
     @Override

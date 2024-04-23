@@ -8,6 +8,15 @@ public class CustomerDTO extends AbstractDTO{
     private String demand;
     private String status;
     private String companyname;
+    private int isActive;
+
+    public int isActive() {
+        return isActive;
+    }
+
+    public void setActive(int active) {
+        isActive = active;
+    }
 
     public String getCompanyname() {
         return companyname;

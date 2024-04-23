@@ -23,11 +23,12 @@ public class TransactionServiceImpl implements TransactionService {
     @Autowired
     private ConverterSolve converterSolve;
     @Override
-    public void AddOrUpdateTransaction(TransactionDTO transaction){
+    public TransactionDTO AddOrUpdateTransaction(TransactionDTO transaction){
         TransactionEntity transactionEntity = modelMapper.map(transaction, TransactionEntity.class);
         CustomerEntity customer  = customerRepository.findById(transaction.getCustomerId()).get();
         transactionEntity.setCustomer(customer);
         transactionRepository.save(transactionEntity);
+        return transaction;
     }
 
     @Override
