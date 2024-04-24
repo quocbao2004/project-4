@@ -4,6 +4,7 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.entity.TransactionEntity;
 import com.javaweb.enums.District;
+import com.javaweb.enums.Status;
 import com.javaweb.enums.TransactionType;
 import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.CustomerDTO;
@@ -69,6 +70,7 @@ public class CustomController {
             setResponse(customerSearchResponse, customerSearchRequest);
             mav.addObject("customerList", customerSearchResponse);
         }
+        mav.addObject("status", Status.StatusType());
         mav.addObject("modelSearchCustomer", customerSearchRequest);
         mav.addObject("listStaffs", userService.getStaffs());
         return mav;
@@ -90,6 +92,7 @@ public class CustomController {
             mav.addObject("transactionEdit1", transactionDTOCSKH);
             mav.addObject("transactionEdit2", transactionDTODDX);
         }
+        mav.addObject("status", Status.StatusType());
         mav.addObject("transactionType", TransactionType.transactionType());
         return mav;
     }

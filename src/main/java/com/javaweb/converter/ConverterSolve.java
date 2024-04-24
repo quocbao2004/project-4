@@ -42,6 +42,16 @@ public class ConverterSolve {
         List<CustomerSearchResponse> result = new ArrayList<>();
         if(customerEntities != null){
             for (CustomerEntity item : customerEntities) {
+                if(item.getStatus() != null){
+                    if(item.getStatus().equals("DA_XU_LY")){
+                        item.setStatus("Đã xử lý");
+                    } else if(item.getStatus().equals("DANG_XU_LY")){
+                        item.setStatus("Đang xử lý");
+                    }
+                    else{
+                        item.setStatus("Chưa xử lý");
+                    }
+                }
                 CustomerSearchResponse customer = modelmapper.map(item, CustomerSearchResponse.class);
                 result.add(customer);
             }
