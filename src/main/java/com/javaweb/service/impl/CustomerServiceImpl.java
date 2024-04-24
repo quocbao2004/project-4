@@ -59,6 +59,13 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerDTO AddOrUpdateCustomer(CustomerDTO customerDTO){
         CustomerEntity customerEntity = modelMapper.map(customerDTO, CustomerEntity.class);
         customerEntity.setActive(1);
+        if(customerDTO.getId() == null){
+            customerEntity.setStatus("CHUA_XU_LY");
+        } else{
+            CustomerEntity temp = customerRepository.findById(customerDTO.getId()).get();
+            customerEntity.setCreatedBy(temp.getCreatedBy());
+            customerEntity.setCreatedDate(temp.getCreatedDate());
+        }
         customerRepository.save(customerEntity);
         return customerDTO;
     }

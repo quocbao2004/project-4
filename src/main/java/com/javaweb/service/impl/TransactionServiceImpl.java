@@ -27,6 +27,11 @@ public class TransactionServiceImpl implements TransactionService {
         TransactionEntity transactionEntity = modelMapper.map(transaction, TransactionEntity.class);
         CustomerEntity customer  = customerRepository.findById(transaction.getCustomerId()).get();
         transactionEntity.setCustomer(customer);
+        if(transaction.getId() != null){
+            TransactionEntity temp = transactionRepository.findById(transaction.getId()).get();
+            transactionEntity.setCreatedBy(temp.getCreatedBy());
+            transactionEntity.setCreatedDate(temp.getCreatedDate());
+        }
         transactionRepository.save(transactionEntity);
         return transaction;
     }
