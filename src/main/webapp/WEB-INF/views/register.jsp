@@ -20,7 +20,7 @@
                                     <div class="card-body p-5">
                                         <div class="mb-md-5 mt-md-4 pb-5 text-center">
                                             <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
-                                            <form action="user-register" id="formRegister" method="POST">
+                                            <form action="register" id="formRegister" method="POST">
                                                 <div class="form-outline form-white mb-4">
                                                     <label class="form-label" for="fullName">Full name</label>
                                                     <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Tên đầy đủ">
@@ -78,8 +78,34 @@
 </body>
 </html>
 <script>
+
 $('#model-register').click(function (e) {
     e.preventDefault();
-    $('#formRegister').trigger('submit');
+    var fullName = $('input[name="fullName"]').val();
+    var userName = $('input[name="userName"]').val();
+    var password = $('input[name="password"]').val();
+    var retype_password = $('input[name="retype_password"]').val();
+    var phone = $('input[name="phone"]').val();
+    var formRegister = {
+        fullName: fullName,
+        userName: userName,
+        phone: phone,
+        retype_password: retype_password,
+        password: password
+    };
+
+    $.ajax({
+        url: '/register',
+        type: 'POST',
+        data: JSON.stringify(formRegister),
+        contentType: "application/json",
+        success: function(response) {
+            window.location.href="<c:url value = "/register"/>";
+        },
+        error: function(xhr, status, error) {
+            window.location.href="<c:url value = "/register"/>";
+        }
+    });
 });
+
 </script>

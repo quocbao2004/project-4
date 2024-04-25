@@ -240,12 +240,6 @@
 </body>
 </html>
 <script>
-    // $('#addCustomer').click(function (e)
-    // {
-    //     e.preventDefault();
-    //     $('#listForm').submit();
-    // })
-
     $('#addCustomer').click(function (e) {
         e.preventDefault();
         var fullname = $('input[name="fullname"]').val();
