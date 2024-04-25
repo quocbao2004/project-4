@@ -125,6 +125,7 @@ public class UserService implements IUserService {
     @Override
     @Transactional
     public UserDTO insert(UserDTO newUser) {
+        newUser.setRoleCode("STAFF");
         RoleEntity role = roleRepository.findOneByCode(newUser.getRoleCode());
         UserEntity userEntity = userConverter.convertToEntity(newUser);
         userEntity.setRoles(Stream.of(role).collect(Collectors.toList()));

@@ -2,17 +2,20 @@ package com.javaweb.controller.web;
 
 import com.javaweb.entity.CustomerEntity;
 import com.javaweb.model.dto.CustomerDTO;
+import com.javaweb.model.dto.UserDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.service.CustomerService;
 import com.javaweb.utils.DistrictCode;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -52,13 +55,11 @@ public class HomeController {
     }
 
     @GetMapping(value="/lien-he")
-    public ModelAndView contact(CustomerDTO customer){
-        ModelAndView mav = new ModelAndView("/web/contact");
-		if(customer.getPhone() != null && customer.getFullname() != null){
-			customerService.AddOrUpdateCustomer(customer);
-		}
-        return mav;
-    }
+    public ModelAndView contact(){
+		ModelAndView mav = new ModelAndView("/web/contact");
+		return mav;
+
+	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView login() {

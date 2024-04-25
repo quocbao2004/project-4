@@ -9,24 +9,8 @@
 </head>
 <body>
 <div class="container">
-    <!-- <h1 class="form-heading">Register Form</h1> -->
     <div class="register-form">
         <div class="main-div">
-<%--            <c:if test="${param.incorrectAccount != null}">--%>
-<%--                <div class="alert alert-danger">--%>
-<%--                    Username or password incorrect--%>
-<%--                </div>--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${param.accessDenied != null}">--%>
-<%--                <div class="alert alert-danger">--%>
-<%--                    You Not authorize--%>
-<%--                </div>--%>
-<%--            </c:if>--%>
-<%--            <c:if test="${param.sessionTimeout != null}">--%>
-<%--                <div class="alert alert-danger">--%>
-<%--                    Session Timeout--%>
-<%--                </div>--%>
-<%--            </c:if>--%>
             <div class="container-fluid" >
                 <section class="gradient-custom">
                     <div class="page-wrapper">
@@ -36,31 +20,30 @@
                                     <div class="card-body p-5">
                                         <div class="mb-md-5 mt-md-4 pb-5 text-center">
                                             <h2 class="fw-bold mb-2 text-uppercase">Register</h2>
-<%--                                            <p class="text-white-50 mb-5">Please enter your login and password!</p>--%>
-                                            <form action="j_spring_security_check" id="formRegister" method="post">
+                                            <form action="user-register" id="formRegister" method="POST">
                                                 <div class="form-outline form-white mb-4">
-                                                    <label class="form-label" for="FullName">Email</label>
-                                                    <input type="text" class="form-control" id="FullName" name="j_fullname" placeholder="Tên đầy đủ">
+                                                    <label class="form-label" for="fullName">Full name</label>
+                                                    <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Tên đầy đủ">
                                                 </div>
 
                                                 <div class="form-outline form-white mb-4">
-                                                    <label class="form-label" for="userName">Full </label>
-                                                    <input type="text" class="form-control" id="userName" name="j_username" placeholder="Tên đăng nhập">
+                                                    <label class="form-label" for="userName">User name </label>
+                                                    <input type="text" class="form-control" id="userName" name="userName" placeholder="Tên đăng nhập">
                                                 </div>
 
                                                 <div class="form-outline form-white mb-4">
                                                     <label class="form-label" for="password">Password</label>
-                                                    <input type="password" class="form-control" id="password" name="j_password" placeholder="Mật khẩu">
+                                                    <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu">
                                                 </div>
 
                                                 <div class="form-outline form-white mb-4">
                                                     <label class="form-label" for="retype_password">retype password</label>
-                                                    <input type="password" class="form-control" id="retype_password" name="j_retype_password" placeholder="Nhắc Lại Mật khẩu">
+                                                    <input type="password" class="form-control" id="retype_password" name="retype_password" placeholder="Nhắc Lại Mật khẩu">
                                                 </div>
 
                                                 <div class="form-outline form-white mb-4">
-                                                    <label class="form-label" for="phone_number">Phone number</label>
-                                                    <input type="text" class="form-control" id="phone_number" name="j_phone_number" placeholder="Số điện thoại">
+                                                    <label class="form-label" for="phone">Phone number</label>
+                                                    <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
                                                 </div>
 
                                                 <div class="form-check d-flex justify-content-center mb-5">
@@ -70,7 +53,7 @@
                                                     </label></div>
                                                 </div>
 
-                                                <button type="submit" class="btn btn-primary" >Đăng ký</button>
+                                                <button type="submit" class="btn btn-primary" id = "model-register">Đăng ký</button>
                                             </form>
                                             <div class="d-flex justify-content-center text-center mt-2 pt-1">
                                                 <a href="#!" class="login-extension text-white"><i class="fab fa-facebook-f fa-lg"></i></a>
@@ -89,10 +72,14 @@
                     </div>
                 </section>
             </div>
-            <%--<script src="./assets/dist/js/boostrap-v5/bootstrap.js"></script>--%>
-            <%--<script src="./assets/dist/js/fontawsome-v5/all.js"></script>--%>
         </div>
     </div>
 </div>
 </body>
 </html>
+<script>
+$('#model-register').click(function (e) {
+    e.preventDefault();
+    $('#formRegister').trigger('submit');
+});
+</script>

@@ -94,4 +94,20 @@ public class UserController {
 			mav.addObject(SystemConstant.MESSAGE_RESPONSE, messageMap.get(SystemConstant.MESSAGE_RESPONSE));
 		}
 	}
+
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public ResponseEntity<?> createUser(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
+		ModelAndView model = new ModelAndView("/register");
+		if(userDTO.getUserName() == null || userDTO.getUserName().trim().equals("") ||
+				userDTO.getPassword() == null || userDTO.getPassword().trim().equals("") ||
+		userDTO.getFullName() == null || userDTO.getFullName().trim().equals("")) {
+			return ResponseEntity.badRequest().body("You filled in missing information");
+		}
+		if(!userDTO.getPassword().equals(userDTO.getRetype_password())){
+			return ResponseEntity.badRequest().body("Password not match");
+		}
+		UserDTO user = userService.insert(userDTO);//return ResponseEntity.ok("Register successfully");
+		return ResponseEntity.ok("");
+	}
+
 }

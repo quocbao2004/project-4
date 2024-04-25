@@ -1,17 +1,10 @@
 package com.javaweb.controller.admin;
 
-import com.javaweb.constant.SystemConstant;
-import com.javaweb.entity.CustomerEntity;
-import com.javaweb.entity.TransactionEntity;
-import com.javaweb.enums.District;
 import com.javaweb.enums.Status;
 import com.javaweb.enums.TransactionType;
-import com.javaweb.enums.TypeCode;
 import com.javaweb.model.dto.CustomerDTO;
 import com.javaweb.model.dto.TransactionDTO;
-import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.request.CustomerSearchRequest;
-import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.CustomerSearchResponse;
 import com.javaweb.repository.CustomerRepository;
 import com.javaweb.repository.TransactionRepository;
@@ -20,22 +13,20 @@ import com.javaweb.service.CustomerService;
 import com.javaweb.service.TransactionService;
 import com.javaweb.service.impl.UserService;
 import com.javaweb.utils.MessageUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 
 @Controller(value="customerControllerOfAdmin")
 @ControllerAdvice
-public class CustomController {
+public class CustomerController {
     @Autowired
     private MessageUtils messageUtil;
     @Autowired
@@ -95,5 +86,14 @@ public class CustomController {
         mav.addObject("status", Status.StatusType());
         mav.addObject("transactionType", TransactionType.transactionType());
         return mav;
+    }
+
+    @RequestMapping(value = "/lien-he", method = RequestMethod.POST)
+    public ResponseEntity<?> contact(CustomerDTO customer){
+        ModelAndView mav = new ModelAndView("/web/contact");
+        if(customer.getPhone() != null && customer.getFullname() != null){
+            customerService.AddOrUpdateCustomer(customer);
+        }
+        return ResponseEntity.ok("");
     }
 }
