@@ -23,7 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-
+@RestController
 @Controller(value="customerControllerOfAdmin")
 @ControllerAdvice
 public class CustomerController {
@@ -89,7 +89,7 @@ public class CustomerController {
     }
 
     @RequestMapping(value = "/lien-he", method = RequestMethod.POST)
-    public ResponseEntity<?> contact(CustomerDTO customer){
+    public ResponseEntity<?> contact(@ModelAttribute CustomerDTO customer){
         ModelAndView mav = new ModelAndView("/web/contact");
         if(customer.getPhone() != null && customer.getFullname() != null){
             customerService.AddOrUpdateCustomer(customer);

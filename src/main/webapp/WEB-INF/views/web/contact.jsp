@@ -240,9 +240,37 @@
 </body>
 </html>
 <script>
-    $('#addCustomer').click(function (e)
-    {
+    // $('#addCustomer').click(function (e)
+    // {
+    //     e.preventDefault();
+    //     $('#listForm').submit();
+    // })
+
+    $('#addCustomer').click(function (e) {
         e.preventDefault();
-        $('#listForm').submit();
-    })
+        var fullname = $('input[name="fullname"]').val();
+        var email = $('input[name="email"]').val();
+        var phone = $('input[name="phone"]').val();
+        var demand = $('input[name="demand"]').val();
+        var formData = {
+            fullname: fullname,
+            email: email,
+            phone: phone,
+            demand: demand
+        };
+
+        $.ajax({
+            url: '${webcontacturl}', // Đường dẫn đến endpoint của server
+            type: 'POST',
+            data: JSON.stringify(formData),
+            contentType: "application/json",
+            success: function(response) {
+                window.location.href="<c:url value = "/lien-he"/>";
+            },
+            error: function(xhr, status, error) {
+                window.location.href="<c:url value = "/lien-he"/>";
+            }
+        });
+    });
+
 </script>
