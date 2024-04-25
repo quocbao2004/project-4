@@ -244,6 +244,8 @@
 </div><!-- /.main-container -->
 <script>
 
+    var customerID = $('#customerId').val();
+
     function addOrUpdateCustomer(data) {
         $.ajax({
             type: "POST",
@@ -258,7 +260,7 @@
             error: function (respond) {
                 console.log("failed");
                 console.log(respond);
-                window.location.href="<c:url value = "/admin/customer-edit"/>";
+                window.location.href="/admin/customer-list";
             }
         })
     }
@@ -307,7 +309,7 @@
 
             error: function (response)
             {
-                window.location.href="/admin/customer-edit";
+                window.location.href="/admin/customer-list";
             }
         })
     }
