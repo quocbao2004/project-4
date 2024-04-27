@@ -118,7 +118,7 @@
                 <div class="col-12 col-md-6">
 
                     <h2 class="title-lienhe"><strong>Liên hệ với chúng tôi</strong></h2>
-                    <form:form modelAttribute="modelAdd" id="listForm" action="${webcontacturl}" method="POST">
+                    <form:form modelAttribute="modelAdd1" id="listForm" action="${webcontacturl}" method="POST">
                         <div class="row">
                             <div class="col">
                                 <input type="text" class="form-control" name = "fullname" placeholder="Họ và tên">
