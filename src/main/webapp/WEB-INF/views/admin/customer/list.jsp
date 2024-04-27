@@ -314,18 +314,10 @@
     }
 
     $('#btnDeleteCustomers').click(function (e) {
-        // e.preventDefault();
-        // var data = {};
-        // var customerIds = $('#tableList').find('tbody input[type="checkbox"]:checked').map(function () {
-        //     return $(this).val();
-        // }).get();
         var customerIds = [];
-        // Loop through each checked checkbox
         $('input[name="checkList"]:checked').each(function() {
-            // Push the value (customer ID) into the array
             customerIds.push($(this).val());
         });
-
         deleteCustomers(customerIds);
     })
 

@@ -402,11 +402,10 @@
         }
 
         $('#btnDeleteBuilding').click(function (e) {
-            e.preventDefault();
-            var data = {};
-            var buildingIds = $('#tableList').find('tbody input[type = "checkbox"]:checkAll').map(function () {
-                return $(this).val();
-            }).get();
+            var buildingIds = [];
+            $('input[name="checkList"]:checked').each(function() {
+                buildingIds.push($(this).val());
+            });
             deleteBuildings(buildingIds);
 
         })
