@@ -65,6 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
             CustomerEntity temp = customerRepository.findById(customerDTO.getId()).get();
             customerEntity.setCreatedBy(temp.getCreatedBy());
             customerEntity.setCreatedDate(temp.getCreatedDate());
+
         }
         customerRepository.save(customerEntity);
         return customerDTO;

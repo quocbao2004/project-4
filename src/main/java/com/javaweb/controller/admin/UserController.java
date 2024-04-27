@@ -3,6 +3,7 @@ package com.javaweb.controller.admin;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.entity.UserEntity;
 import com.javaweb.model.dto.UserDTO;
+import com.javaweb.repository.UserRepository;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.service.IUserService;
 import com.javaweb.service.impl.RoleService;
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller(value = "usersControllerOfAdmin")
 public class UserController {
@@ -35,6 +37,8 @@ public class UserController {
 
 	@Autowired
 	private MessageUtils messageUtil;
+    @Autowired
+    private UserRepository userRepository;
 
 	@RequestMapping(value = "/admin/user-list", method = RequestMethod.GET)
 	public ModelAndView getNews(@ModelAttribute(SystemConstant.MODEL) UserDTO model, HttpServletRequest request) {
@@ -96,18 +100,31 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@ModelAttribute UserDTO userDTO, HttpServletRequest request) {
-		ModelAndView model = new ModelAndView("/register");
-		if(userDTO.getUserName() == null || userDTO.getUserName().trim().equals("") ||
-				userDTO.getPassword() == null || userDTO.getPassword().trim().equals("") ||
-		userDTO.getFullName() == null || userDTO.getFullName().trim().equals("")) {
-			return ResponseEntity.badRequest().body("You filled in missing information");
+	public ResponseEntity<?> createUser(@ModelAttribute UserDTO userDTO, HttpServletRequest request, BindingResult result) {
+//		ModelAndView model = new ModelAndView("/register");
+		try{
+			if(result.hasErrors()){
+				List<String> errorMessages = result.getFieldErrors()
+						.stream()
+						.map(FieldError::getDefaultMessage)
+						.collect(Collectors.toList());
+				return ResponseEntity.badRequest().body(errorMessages);
+			}
+			if(userDTO.getUserName() == null || userDTO.getUserName().trim().equals("") ||
+					userDTO.getPassword() == null || userDTO.getPassword().trim().equals("") ||
+					userDTO.getFullName() == null || userDTO.getFullName().trim().equals("")) {
+				return ResponseEntity.badRequest().body("You filled in missing information");
+			}
+
+			if(!userDTO.getPassword().equals(userDTO.getRetype_password())){
+				return ResponseEntity.badRequest().body("Password not match");
+			}
+			UserDTO user = userService.insert(userDTO);
+			return ResponseEntity.ok("");
+		} catch (Exception ex){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 		}
-		if(!userDTO.getPassword().equals(userDTO.getRetype_password())){
-			return ResponseEntity.badRequest().body("Password not match");
-		}
-		UserDTO user = userService.insert(userDTO);//return ResponseEntity.ok("Register successfully");
-		return ResponseEntity.ok("");
+
 	}
 
 }

@@ -100,10 +100,10 @@ $('#model-register').click(function (e) {
         data: JSON.stringify(formRegister),
         contentType: "application/json",
         success: function(response) {
-            window.location.href="<c:url value = "/register"/>";
+            location.reload();
         },
         error: function(xhr, status, error) {
-            window.location.href="<c:url value = "/register"/>";
+            location.reload();
         }
     });
 });

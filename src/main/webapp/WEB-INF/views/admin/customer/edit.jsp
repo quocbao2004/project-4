@@ -333,7 +333,8 @@
             dataType: "JSON",
             success: function (response)
             {
-                window.location.href="/admin/customer-list";
+                var customerId = $('#customerId').val();
+                window.location.href = "/admin/customer-edit-" + customerId;
             },
 
             error: function (response) {

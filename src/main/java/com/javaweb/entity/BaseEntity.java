@@ -32,6 +32,7 @@ public class BaseEntity implements Serializable {
     @LastModifiedDate
     private Date modifiedDate;
 
+
     @Column(name = "modifiedby")
     @LastModifiedBy
     private String modifiedBy;

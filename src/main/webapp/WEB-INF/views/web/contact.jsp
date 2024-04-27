@@ -254,15 +254,15 @@
         };
 
         $.ajax({
-            url: '${webcontacturl}', // Đường dẫn đến endpoint của server
+            url: '${webcontacturl}',
             type: 'POST',
             data: JSON.stringify(formData),
             contentType: "application/json",
             success: function(response) {
-                window.location.href="<c:url value = "/lien-he"/>";
+                location.reload();
             },
             error: function(xhr, status, error) {
-                window.location.href="<c:url value = "/lien-he"/>";
+                location.reload();
             }
         });
     });

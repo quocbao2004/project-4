@@ -18,6 +18,8 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> , UserRe
     long countByUserNameContainingIgnoreCaseOrFullNameContainingIgnoreCaseAndStatusNot(String userName, String fullName, int status);
     long countByStatusNot(int status);
     UserEntity findOneByUserName(String userName);
+    UserEntity findOneByPhone(String phone);
+    UserEntity findOneByEmail(String email);
     List<UserEntity> findByIdIn(List<Long> id);
     List<UserEntity> getAllUsers(Pageable pageable);
 //    interface BuildingRepository extends JpaRepository<BuildingSearchResponse, Integer> BuildingRepositoryCustom {

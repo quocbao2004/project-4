@@ -130,6 +130,12 @@ public class ConverterSolve {
         List<TransactionDTO> result = new ArrayList<>();
         if(entities != null){
             for(TransactionEntity it : entities){
+                if(it.getCreatedDate().equals(it.getModifiedDate())){
+                    it.setModifiedDate(null);
+                }
+                if(it.getCreatedBy().equals(it.getModifiedBy()) && it.getModifiedDate() == null){
+                    it.setModifiedBy(null);
+                }
                 TransactionDTO dto = modelmapper.map(it, TransactionDTO.class);
                 result.add(dto);
             }
