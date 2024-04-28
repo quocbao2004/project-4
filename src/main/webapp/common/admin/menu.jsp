@@ -111,7 +111,7 @@
             <b class="arrow"></b>
             <ul class="submenu">
                 <li class="">
-                    <a href='/admin/user-profile'>
+                    <a href='/admin/morepages-profile'>
                         <i class="menu-icon fa fa-caret-right"></i>
                         Profile
                     </a>

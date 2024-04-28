@@ -255,12 +255,14 @@
             dataType: "JSON",
             success: function (respond) {
                 window.location.href="<c:url value = "/admin/customer-list"/>";
+                alert("Thêm thành công");
             },
 
             error: function (respond) {
                 console.log("failed");
                 console.log(respond);
                 window.location.href="/admin/customer-list";
+                alert("Thêm không thành công");
             }
         })
     }
@@ -335,10 +337,12 @@
             {
                 var customerId = $('#customerId').val();
                 window.location.href = "/admin/customer-edit-" + customerId;
+                alert("Thêm giao dịch thành công");
             },
 
             error: function (response) {
                 window.location.href="/admin/customer-list";
+                alert("Thêm giao dịch không thành công");
             }
         })
     }

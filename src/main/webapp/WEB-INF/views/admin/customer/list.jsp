@@ -288,6 +288,7 @@
             {
                 console.info("Success");
                 window.location.href="/admin/customer-list";
+                alert("Giao thành công");
             },
 
             error: function (response)
@@ -295,6 +296,7 @@
                 console.info("Giao không thành công!");
                 window.location.href="<c:url value = "/admin/customer-list?message=erro"/>";
                 console.log(respond);
+                alert("Giao không thành công");
             }
         })
     }
@@ -331,13 +333,14 @@
             dataType: "JSON",
             success: function (respond) {
                 console.log("Success");
+                alert("Xóa thành công");
                 window.location.href="<c:url value = "/admin/customer-list"/>";
             },
-
             error: function (respond) {
                 console.log("failed");
                 console.log(respond);
                 window.location.href="<c:url value = "/admin/customer-list"/>";
+                alert("Thất bại");
             }
         })
     }

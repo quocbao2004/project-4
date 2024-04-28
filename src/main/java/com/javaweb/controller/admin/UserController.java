@@ -125,5 +125,13 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
 		}
 	}
-
+	@RequestMapping(value = "/admin/morepages-profile", method = RequestMethod.GET)
+	public ResponseEntity<?> profile(@ModelAttribute UserDTO userDTO, HttpServletRequest request, BindingResult result) {
+		try{
+			ModelAndView mav = new ModelAndView("admin/morepages/profile");
+			return ResponseEntity.ok("");
+		} catch (Exception ex) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+		}
+	}
 }
