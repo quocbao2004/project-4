@@ -54,4 +54,9 @@ public class UserAPI {
         }
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/edit")
+    public void UpdateProfile(@RequestBody UserDTO userDTO) {
+        userService.UpdateInfo(userDTO);
+    }
 }

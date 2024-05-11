@@ -46,13 +46,6 @@
                                                     <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
                                                 </div>
 
-                                                <div class="form-check d-flex justify-content-center mb-5">
-                                                    <div><input class="form-check-input me-2" type="checkbox" value="" id="form2Example3cg" /></div>
-                                                    <div><label class="form-check-label">
-                                                        Remember Password
-                                                    </label></div>
-                                                </div>
-
                                                 <button type="submit" class="btn btn-primary" id = "model-register">Đăng ký</button>
                                             </form>
                                             <div class="d-flex justify-content-center text-center mt-2 pt-1">
@@ -100,10 +93,12 @@ $('#model-register').click(function (e) {
         data: JSON.stringify(formRegister),
         contentType: "application/json",
         success: function(response) {
-            location.reload();
+            alert("Đăng kí thành công");
+            window.location.href="<c:url value = "/trang-chu"/>";
         },
         error: function(xhr, status, error) {
-            location.reload();
+            alert("Đăng kí không thành công");
+            window.location.href="<c:url value = "/trang-chu"/>";
         }
     });
 });

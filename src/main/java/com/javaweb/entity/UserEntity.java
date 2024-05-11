@@ -32,6 +32,12 @@ public class UserEntity extends BaseEntity {
     @Column(name = "phone", unique = true)
     private String phone;
 
+    @Column(name="note")
+    private String note;
+
+    @Column(name ="address")
+    private String address;
+
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id", nullable = false),
@@ -58,6 +64,22 @@ public class UserEntity extends BaseEntity {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     //    @OneToMany(mappedBy="staffs", fetch = FetchType.LAZY)

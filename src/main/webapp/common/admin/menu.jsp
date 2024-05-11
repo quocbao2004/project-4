@@ -15,18 +15,6 @@
                     </svg>
                 </button>
             </a>
-
-            <button class="btn btn-info">
-                <i class="ace-icon fa fa-pencil"></i>
-            </button>
-
-            <button class="btn btn-warning">
-                <i class="ace-icon fa fa-users"></i>
-            </button>
-
-            <button class="btn btn-danger">
-                <i class="ace-icon fa fa-cogs"></i>
-            </button>
         </div>
         <div class="sidebar-shortcuts-mini">
             <span class="btn btn-success"></span>

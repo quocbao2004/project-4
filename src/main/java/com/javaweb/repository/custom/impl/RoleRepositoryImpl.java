@@ -1,6 +1,7 @@
 package com.javaweb.repository.custom.impl;
 
 import com.javaweb.entity.RoleEntity;
+import com.javaweb.entity.UserEntity;
 import com.javaweb.repository.RoleRepository;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;

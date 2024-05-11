@@ -10,10 +10,13 @@ import com.javaweb.service.impl.RoleService;
 import com.javaweb.utils.DisplayTagUtils;
 import com.javaweb.utils.MessageUtils;
 import org.apache.commons.lang.StringUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -21,24 +24,22 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller(value = "usersControllerOfAdmin")
 public class UserController {
-
 	@Autowired
 	private IUserService userService;
-
 	@Autowired
 	private RoleService roleService;
-
 	@Autowired
 	private MessageUtils messageUtil;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
 	@RequestMapping(value = "/admin/user-list", method = RequestMethod.GET)
 	public ModelAndView getNews(@ModelAttribute(SystemConstant.MODEL) UserDTO model, HttpServletRequest request) {
@@ -101,7 +102,6 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<?> createUser(@ModelAttribute UserDTO userDTO, HttpServletRequest request, BindingResult result) {
-//		ModelAndView model = new ModelAndView("/register");
 		try{
 			if(result.hasErrors()){
 				List<String> errorMessages = result.getFieldErrors()
@@ -126,12 +126,22 @@ public class UserController {
 		}
 	}
 	@RequestMapping(value = "/admin/morepages-profile", method = RequestMethod.GET)
-	public ResponseEntity<?> profile(@ModelAttribute UserDTO userDTO, HttpServletRequest request, BindingResult result) {
-		try{
-			ModelAndView mav = new ModelAndView("admin/morepages/profile");
-			return ResponseEntity.ok("");
-		} catch (Exception ex) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-		}
+	public ModelAndView profile() {
+		ModelAndView mav = new ModelAndView("admin/morepages/profile");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+		UserDTO user = userService.findOneByUserName(userName);
+		mav.addObject("UserInfo", user);
+		return mav;
+	}
+
+	@RequestMapping(value = "/admin/morepages-edit-{id}", method = RequestMethod.GET)
+	public ModelAndView EditProfile() {
+		ModelAndView mav = new ModelAndView("admin/morepages/edit");
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String userName = authentication.getName();
+		UserDTO user = userService.findOneByUserName(userName);
+		mav.addObject("UserEditInfo", user);
+		return mav;
 	}
 }

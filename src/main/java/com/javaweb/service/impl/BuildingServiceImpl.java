@@ -48,8 +48,6 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingSearchBuilderConverter buildingSearchBuilderConverter;
     @Autowired
     private RentAreaRepository rentAreaRepository;
-//    @Autowired
-//    private AssignmentRepository assignmentRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired

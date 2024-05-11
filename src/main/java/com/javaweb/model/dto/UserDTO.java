@@ -17,6 +17,24 @@ public class UserDTO extends AbstractDTO {
     private Map<String,String> roleDTOs = new HashMap<>();
     private String phone;
     private String email;
+    private String note;
+    private String address;
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getPhone() {
         return phone;

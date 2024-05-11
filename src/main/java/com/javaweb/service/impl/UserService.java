@@ -1,7 +1,10 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.converter.ConverterSolve;
 import com.javaweb.converter.UserConverter;
+import com.javaweb.entity.BuildingEntity;
+import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.dto.PasswordDTO;
 import com.javaweb.model.dto.UserDTO;
 import com.javaweb.entity.RoleEntity;
@@ -10,7 +13,10 @@ import com.javaweb.exception.MyException;
 import com.javaweb.repository.RoleRepository;
 import com.javaweb.repository.UserRepository;
 import com.javaweb.service.IUserService;
+import com.javaweb.utils.UploadFileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +24,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,7 +46,14 @@ public class UserService implements IUserService {
     @Autowired
     private UserConverter userConverter;
 
+    @Autowired
+    private ModelMapper modelMapper;
 
+    @Autowired
+    private ConverterSolve converterSolve;
+
+    @Autowired
+    private UploadFileUtils uploadFileUtils;
 
     @Override
     public UserDTO findOneByUserNameAndStatus(String name, int status) {
@@ -184,5 +198,14 @@ public class UserService implements IUserService {
             userEntity.setStatus(0);
             userRepository.save(userEntity);
         }
+    }
+    @Override
+    @Transactional
+    public void UpdateInfo(UserDTO userDTO){
+        UserEntity user = userRepository.findById(userDTO.getId()).get();
+        List<RoleEntity>roles = user.getRoles();
+        UserEntity res = userConverter.convertToEntity2(userDTO, user);
+        res.setRoles(roles);
+        userRepository.save(user);
     }
 }
