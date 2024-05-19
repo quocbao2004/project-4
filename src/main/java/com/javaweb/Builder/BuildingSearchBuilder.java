@@ -147,7 +147,6 @@ public class BuildingSearchBuilder {
             this.staffId = staffId;
             return this;
         }
-
         public BuildingSearchBuilder build() {
             return new BuildingSearchBuilder(this);
         }

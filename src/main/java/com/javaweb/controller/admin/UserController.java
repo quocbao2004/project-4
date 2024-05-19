@@ -100,31 +100,6 @@ public class UserController {
 		}
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<?> createUser(@ModelAttribute UserDTO userDTO, HttpServletRequest request, BindingResult result) {
-		try{
-			if(result.hasErrors()){
-				List<String> errorMessages = result.getFieldErrors()
-						.stream()
-						.map(FieldError::getDefaultMessage)
-						.collect(Collectors.toList());
-				return ResponseEntity.badRequest().body(errorMessages);
-			}
-			if(userDTO.getUserName() == null || userDTO.getUserName().trim().equals("") ||
-					userDTO.getPassword() == null || userDTO.getPassword().trim().equals("") ||
-					userDTO.getFullName() == null || userDTO.getFullName().trim().equals("")) {
-				return ResponseEntity.badRequest().body("You filled in missing information");
-			}
-
-			if(!userDTO.getPassword().equals(userDTO.getRetype_password())){
-				return ResponseEntity.badRequest().body("Password not match");
-			}
-			UserDTO user = userService.insert(userDTO);
-			return ResponseEntity.ok("");
-		} catch (Exception ex){
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-		}
-	}
 	@RequestMapping(value = "/admin/morepages-profile", method = RequestMethod.GET)
 	public ModelAndView profile() {
 		ModelAndView mav = new ModelAndView("admin/morepages/profile");

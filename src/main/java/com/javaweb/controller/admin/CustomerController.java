@@ -46,7 +46,6 @@ public class CustomerController {
         customerSearchResponse.setTotalItems((int)customerService.countTotalItems(customerSearchRequest));
     }
 
-    @ExceptionHandler(Exception.class)
     @RequestMapping(value = "/admin/customer-list", method = RequestMethod.GET)
     public ModelAndView customerList(@ModelAttribute CustomerSearchRequest customerSearchRequest, HttpServletRequest request, Exception ex) {
         ModelAndView mav = new ModelAndView("admin/customer/list");

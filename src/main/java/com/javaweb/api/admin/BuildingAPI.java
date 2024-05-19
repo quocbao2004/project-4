@@ -1,22 +1,16 @@
 package com.javaweb.api.admin;
 
-import com.javaweb.entity.BuildingEntity;
-import com.javaweb.entity.RentAreaEntity;
 import com.javaweb.model.dto.AssignmentBuildingDTO;
 import com.javaweb.model.dto.BuildingDTO;
 import com.javaweb.model.request.BuildingSearchRequest;
 import com.javaweb.model.response.BuildingSearchResponse;
 import com.javaweb.model.response.ResponseDTO;
-import com.javaweb.repository.BuildingRepository;
 import com.javaweb.service.BuildingService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RestController(value="buildingAPIOfAdmin")
@@ -25,10 +19,8 @@ import java.util.List;
 public class BuildingAPI {
     @Autowired
     BuildingService buildingService;
-
     @Autowired
     private BuildingService buildingservice;
-
 
     @PostMapping
     public void AddOrUpdateBuilding(@RequestBody BuildingDTO buildingDTO){
